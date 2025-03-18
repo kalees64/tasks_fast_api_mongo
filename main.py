@@ -1,11 +1,16 @@
 from fastapi import FastAPI
 from src.task.task_controller import task_controller
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 
 app = FastAPI(
     title="VK64 Tasks API",
     version="0.0.1"
 )
+
+@app.get("/")
+def vk64():
+    return {"data": "VK64 Tasks API"}
 
 
 app.include_router(task_controller)
@@ -18,3 +23,6 @@ app.add_middleware(
                    allow_methods = ["*"],
                    allow_headers = ["*"]
                    )
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
